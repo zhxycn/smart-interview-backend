@@ -9,16 +9,22 @@ import (
 )
 
 type Config struct {
-	Debug    bool
-	Port     string
-	Database string
+	Debug           bool
+	Port            string
+	Database        string
+	XunfeiAppId     string
+	XunfeiApiKey    string
+	XunfeiApiSecret string
 }
 
 func DefaultConfig() *Config {
 	return &Config{
-		Debug:    false,
-		Port:     "8080",
-		Database: "",
+		Debug:           false,
+		Port:            "8080",
+		Database:        "",
+		XunfeiAppId:     "",
+		XunfeiApiKey:    "",
+		XunfeiApiSecret: "",
 	}
 }
 

@@ -1,9 +1,9 @@
 package database
 
-type DB struct {
-	ID int64 `gorm:"primaryKey;autoIncrement" json:"id"`
+type User struct {
+	UID int `gorm:"primaryKey;column:uid"`
 }
 
-func (DB) TableName() string {
-	return "db"
+func (User) TableName() string {
+	return "user"
 }

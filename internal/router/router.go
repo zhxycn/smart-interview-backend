@@ -9,6 +9,7 @@ import (
 func NewRouter() *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", handler.Home)
+	mux.HandleFunc("/facial", methodHandler(handler.Facial, http.MethodPost))
 	return mux
 }
 
