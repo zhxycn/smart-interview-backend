@@ -15,6 +15,8 @@ type Config struct {
 	XunfeiAppId     string
 	XunfeiApiKey    string
 	XunfeiApiSecret string
+	DifyEndpoint    string
+	ResumeApiKey    string
 }
 
 func DefaultConfig() *Config {
@@ -25,6 +27,8 @@ func DefaultConfig() *Config {
 		XunfeiAppId:     "",
 		XunfeiApiKey:    "",
 		XunfeiApiSecret: "",
+		DifyEndpoint:    "",
+		ResumeApiKey:    "",
 	}
 }
 
