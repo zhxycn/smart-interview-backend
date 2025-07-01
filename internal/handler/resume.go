@@ -18,7 +18,7 @@ func Resume(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	file, handler, err := r.FormFile("file")
+	file, handler, err := r.FormFile("file") // 文件
 	if err != nil {
 		util.WriteResponse(w, http.StatusBadRequest, "failed to get file")
 		middleware.Logger.Log("ERROR", fmt.Sprintf("Failed to get file: %v", err))
@@ -28,6 +28,13 @@ func Resume(w http.ResponseWriter, r *http.Request) {
 
 	middleware.Logger.Log("INFO", fmt.Sprintf("Received file: %v", handler.Filename))
 
+	params := resume.Params{
+		TargetPosition: r.FormValue("targetPosition"),
+		Experience:     r.FormValue("experience"),
+		Industry:       r.FormValue("industry"),
+		FocusAreas:     r.FormValue("focusAreas"),
+	}
+
 	var buf bytes.Buffer
 	_, err = io.Copy(&buf, file)
 	if err != nil {
@@ -36,7 +43,7 @@ func Resume(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result, err := resume.Analysis(handler.Filename, buf.Bytes())
+	result, err := resume.Analysis(handler.Filename, buf.Bytes(), params)
 	if err != nil {
 		util.WriteResponse(w, http.StatusInternalServerError, "failed to analyze")
 		middleware.Logger.Log("ERROR", fmt.Sprintf("Failed to analyze: %v", err))

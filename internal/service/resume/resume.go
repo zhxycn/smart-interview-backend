@@ -9,6 +9,31 @@ import (
 	"smart-interview/internal/config"
 )
 
+type Params struct {
+	TargetPosition string
+	Experience     string
+	Industry       string
+	FocusAreas     string
+}
+
+type StructuredOutput struct {
+	OverallScore   int `json:"overallScore"`
+	DetailedScores []struct {
+		Category string `json:"category"`
+		Score    int    `json:"score"`
+		Comment  string `json:"comment"`
+	} `json:"detailedScores"`
+	Suggestions []struct {
+		Priority int    `json:"priority"`
+		Title    string `json:"title"`
+		Content  string `json:"content"`
+	} `json:"suggestions"`
+	KeywordAnalysis struct {
+		Matched   []string `json:"matched"`
+		Suggested []string `json:"suggested"`
+	} `json:"keywordAnalysis"`
+}
+
 func uploadFile(fileName string, fileData []byte) (string, error) {
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
@@ -47,7 +72,7 @@ func uploadFile(fileName string, fileData []byte) (string, error) {
 	return result.FileID, nil
 }
 
-func RunWorkflow(fileID string) (string, error) {
+func RunWorkflow(fileID string, params Params) (StructuredOutput, error) {
 	url := fmt.Sprintf("%s/workflows/run", config.LoadConfig().DifyEndpoint)
 
 	payload := map[string]interface{}{
@@ -60,6 +85,10 @@ func RunWorkflow(fileID string) (string, error) {
 					"type":            "document",
 				},
 			},
+			"targetPosition": params.TargetPosition,
+			"experience":     params.Experience,
+			"industry":       params.Industry,
+			"focusAreas":     params.FocusAreas,
 		},
 		"response_mode": "blocking",
 		"user":          "admin",
@@ -69,44 +98,42 @@ func RunWorkflow(fileID string) (string, error) {
 
 	req, err := http.NewRequest("POST", url, bytes.NewReader(body))
 	if err != nil {
-		return "", err
+		return StructuredOutput{}, err
 	}
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", config.LoadConfig().ResumeApiKey))
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
-
 	resp, err := client.Do(req)
 	if err != nil {
-		return "", err
+		return StructuredOutput{}, err
 	}
-
 	defer resp.Body.Close()
 
 	var respData struct {
 		Data struct {
 			Outputs struct {
-				Text string `json:"text"`
+				StructuredOutput StructuredOutput `json:"structured_output"`
 			} `json:"outputs"`
 		} `json:"data"`
 	}
 
 	if err := json.NewDecoder(resp.Body).Decode(&respData); err != nil {
-		return "", err
+		return StructuredOutput{}, err
 	}
 
-	return respData.Data.Outputs.Text, nil
+	return respData.Data.Outputs.StructuredOutput, nil
 }
 
-func Analysis(fileName string, fileData []byte) (string, error) {
+func Analysis(fileName string, fileData []byte, params Params) (StructuredOutput, error) {
 	fileID, err := uploadFile(fileName, fileData)
 	if err != nil {
-		return "", err
+		return StructuredOutput{}, err
 	}
 
-	result, err := RunWorkflow(fileID)
+	result, err := RunWorkflow(fileID, params)
 	if err != nil {
-		return "", err
+		return StructuredOutput{}, err
 	}
 
 	return result, nil
