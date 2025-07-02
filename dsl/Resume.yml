@@ -1,0 +1,353 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: Resume
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openrouter:0.0.12@2920ef167f54ffe49bdd8f3cf09d8e58f8259aa9ea98b97109292cbdd9cfc177
+kind: app
+version: 0.2.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions: []
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - remote_url
+      - local_file
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: document-extractor
+      id: 1751276242983-source-1751278861087-target
+      source: '1751276242983'
+      sourceHandle: source
+      target: '1751278861087'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1751278872081-source-1751278896254-target
+      source: '1751278872081'
+      sourceHandle: source
+      target: '1751278896254'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1751278861087-source-1751278872081-target
+      source: '1751278861087'
+      sourceHandle: source
+      target: '1751278872081'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: data
+          max_length: 1
+          options: []
+          required: true
+          type: file-list
+          variable: data
+        - label: targetPosition
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: targetPosition
+        - label: experience
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: experience
+        - label: industry
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: industry
+        - label: focusAreas
+          max_length: 96
+          options: []
+          required: true
+          type: text-input
+          variable: focusAreas
+      height: 193
+      id: '1751276242983'
+      position:
+        x: 30
+        y: 296.5
+      positionAbsolute:
+        x: 30
+        y: 296.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        is_array_file: true
+        selected: false
+        title: 文档提取器
+        type: document-extractor
+        variable_selector:
+        - '1751276242983'
+        - data
+      height: 91
+      id: '1751278861087'
+      position:
+        x: 333
+        y: 296.5
+      positionAbsolute:
+        x: 333
+        y: 296.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: openai/gpt-4.1-nano
+          provider: langgenius/openrouter/openrouter
+        prompt_template:
+        - edition_type: basic
+          id: 08ff73c4-78dc-46f3-80fe-87fc295d2275
+          role: system
+          text: '```xml
+
+            <instructions>
+
+            你是一名求职面试简历分析师，任务是根据用户提供的目标职位、工作经验、行业领域和评价重点，对简历进行全面且专业的评价。请严格按照以下步骤完成任务：
+
+
+            1. 理解目标职位的核心职责和要求，结合工作经验和行业领域，判断简历内容与目标职位的匹配度。
+
+            2. 根据工作经验，分析候选人在相关岗位上的能力、成就及经验深度，重点关注与目标职位相关的技能和经历。
+
+            3. 结合行业领域，评估候选人对行业特点、趋势及专业知识的掌握情况，判断其在该行业的适应性和竞争力。
+
+            4. 针对评价重点，逐条展开评价，明确指出简历中体现出的优势和不足，给出具体且有针对性的分析。
+
+            5. 评价内容应条理清晰，逻辑严谨，语言专业且简洁，避免使用任何XML标签或格式代码。
+
+            6. 所有的评分请使用百分制整数表示，例如：75。
+
+            7. 严格按指定结构输出。
+
+            </instructions>
+
+            ```'
+        - id: 2f8ca48f-8cbe-40e8-b20a-cc15c2648bd7
+          role: user
+          text: '目标职位：{{#1751276242983.targetPosition#}}
+
+
+            工作经验：{{#1751276242983.experience#}}
+
+
+            行业领域：{{#1751276242983.industry#}}
+
+
+            评价重点：{{#1751276242983.focusAreas#}}
+
+
+            简历内容：
+
+            {{#1751278861087.text#}}
+
+            '
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              detailedScores:
+                description: 评价重点中的各项细分评分
+                items:
+                  additionalProperties: false
+                  properties:
+                    category:
+                      description: 重点评价其中一个维度
+                      type: string
+                    comment:
+                      description: 评语
+                      type: string
+                    score:
+                      description: 得分
+                      type: number
+                  required:
+                  - category
+                  - score
+                  - comment
+                  type: object
+                type: array
+              keywordAnalysis:
+                additionalProperties: false
+                description: 关键词分析
+                properties:
+                  matched:
+                    description: 与所选岗位、行业匹配的关键词
+                    items:
+                      type: string
+                    type: array
+                  suggested:
+                    description: 建议补充的关键词
+                    items:
+                      type: string
+                    type: array
+                required:
+                - matched
+                - suggested
+                type: object
+              overallScore:
+                description: 总分
+                type: number
+              suggestions:
+                description: 改进建议
+                items:
+                  additionalProperties: false
+                  properties:
+                    content:
+                      description: 建议内容
+                      type: string
+                    examples:
+                      description: 示例
+                      items:
+                        type: string
+                      type: array
+                    priority:
+                      description: 优先级
+                      type: number
+                    title:
+                      description: 建议标题
+                      type: string
+                  required:
+                  - priority
+                  - title
+                  - content
+                  - examples
+                  type: object
+                type: array
+            required:
+            - overallScore
+            - detailedScores
+            - suggestions
+            - keywordAnalysis
+            type: object
+        structured_output_enabled: true
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 118
+      id: '1751278872081'
+      position:
+        x: 636
+        y: 296.5
+      positionAbsolute:
+        x: 636
+        y: 296.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1751278872081'
+          - structured_output
+          variable: structured_output
+        selected: false
+        title: 结束
+        type: end
+      height: 89
+      id: '1751278896254'
+      position:
+        x: 939
+        y: 296.5
+      positionAbsolute:
+        x: 939
+        y: 296.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    viewport:
+      x: 174.35044340619362
+      y: -70.13954280743064
+      zoom: 0.923655537541026
