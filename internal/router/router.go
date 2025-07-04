@@ -11,6 +11,7 @@ func NewRouter() *http.ServeMux {
 	mux.HandleFunc("/", handler.Home)
 	mux.HandleFunc("/facial", methodHandler(handler.Facial, http.MethodPost))
 	mux.HandleFunc("/resume", methodHandler(handler.Resume, http.MethodPost))
+	mux.HandleFunc("/interview", methodHandler(handler.Interview, http.MethodPost))
 
 	return mux
 }

@@ -9,26 +9,40 @@ import (
 )
 
 type Config struct {
-	Debug           bool
-	Port            string
-	Database        string
-	XunfeiAppId     string
-	XunfeiApiKey    string
-	XunfeiApiSecret string
-	DifyEndpoint    string
-	ResumeApiKey    string
+	Debug            bool
+	Port             string
+	Database         string
+	XunfeiAppId      string
+	XunfeiApiKey     string
+	XunfeiApiSecret  string
+	DifyEndpoint     string
+	ResumeApiKey     string
+	InterviewApiKey  string
+	TencentAppId     string
+	TencentSecretId  string
+	TencentSecretKey string
+	SiliconflowToken string
+	SiliconflowModel string
+	SiliconflowVoice string
 }
 
 func DefaultConfig() *Config {
 	return &Config{
-		Debug:           false,
-		Port:            "8080",
-		Database:        "",
-		XunfeiAppId:     "",
-		XunfeiApiKey:    "",
-		XunfeiApiSecret: "",
-		DifyEndpoint:    "",
-		ResumeApiKey:    "",
+		Debug:            false,
+		Port:             "8080",
+		Database:         "",
+		XunfeiAppId:      "",
+		XunfeiApiKey:     "",
+		XunfeiApiSecret:  "",
+		DifyEndpoint:     "",
+		ResumeApiKey:     "",
+		InterviewApiKey:  "",
+		TencentAppId:     "",
+		TencentSecretId:  "",
+		TencentSecretKey: "",
+		SiliconflowToken: "",
+		SiliconflowModel: "",
+		SiliconflowVoice: "",
 	}
 }
 
