@@ -186,9 +186,10 @@ func CallTTSWorkflow(text string) (string, error) {
 	endpoint := "https://api.siliconflow.cn/v1/audio/speech"
 
 	payload := map[string]interface{}{
-		"model": config.LoadConfig().SiliconflowModel,
-		"input": text,
-		"voice": config.LoadConfig().SiliconflowVoice,
+		"model":           config.LoadConfig().SiliconflowModel,
+		"input":           text,
+		"voice":           config.LoadConfig().SiliconflowVoice,
+		"response_format": "wav",
 	}
 
 	body, _ := json.Marshal(payload)
