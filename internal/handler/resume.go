@@ -10,7 +10,7 @@ import (
 	"smart-interview/internal/util"
 )
 
-func Resume(w http.ResponseWriter, r *http.Request) {
+func ResumeHandler(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseMultipartForm(10 << 20)
 	if err != nil {
 		util.WriteResponse(w, http.StatusBadRequest, "failed to parse form")

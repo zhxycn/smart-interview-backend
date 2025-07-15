@@ -23,7 +23,7 @@ func stripBase64Header(data string) string {
 	return data
 }
 
-func Facial(w http.ResponseWriter, r *http.Request) {
+func FacialHandler(w http.ResponseWriter, r *http.Request) {
 	cfg := config.LoadConfig()
 	serverID := "s67c9c78c"
 
