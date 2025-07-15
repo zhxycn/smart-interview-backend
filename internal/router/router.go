@@ -8,12 +8,15 @@ import (
 
 func NewRouter() *http.ServeMux {
 	mux := http.NewServeMux()
+
 	mux.HandleFunc("/", handler.Home)
 	mux.HandleFunc("/register", methodHandler(handler.RegisterHandler, http.MethodPost))
 	mux.HandleFunc("/login", methodHandler(handler.LoginHandler, http.MethodPost))
-	mux.HandleFunc("/facial", methodHandler(handler.FacialHandler, http.MethodPost))
-	mux.HandleFunc("/resume", methodHandler(handler.ResumeHandler, http.MethodPost))
-	mux.HandleFunc("/interview", methodHandler(handler.Interview, http.MethodPost))
+	mux.HandleFunc("/logout", methodHandler(handler.LogoutHandler, http.MethodPost))
+
+	mux.HandleFunc("/facial", methodHandler(util.RequireAuth(handler.FacialHandler), http.MethodPost))
+	mux.HandleFunc("/resume", methodHandler(util.RequireAuth(handler.ResumeHandler), http.MethodPost))
+	mux.HandleFunc("/interview", methodHandler(util.RequireAuth(handler.Interview), http.MethodPost))
 
 	return mux
 }

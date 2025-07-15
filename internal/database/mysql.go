@@ -6,6 +6,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"smart-interview/internal/config"
+	"smart-interview/internal/database/struct"
 	"smart-interview/internal/middleware"
 	"time"
 )
@@ -41,7 +42,7 @@ func NewDB(cfg *config.Config) error {
 		middleware.Logger.Log("ERROR", fmt.Sprintf("[DB] GORM connect failed: %v", err))
 		return err
 	}
-	if err = gormDB.AutoMigrate(&User{}); err != nil {
+	if err = gormDB.AutoMigrate(&_struct.User{}, &_struct.Session{}); err != nil {
 		middleware.Logger.Log("ERROR", fmt.Sprintf("[DB] AutoMigrate failed: %v", err))
 		return err
 	}

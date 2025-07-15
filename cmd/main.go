@@ -7,6 +7,7 @@ import (
 	"smart-interview/internal/database"
 	"smart-interview/internal/middleware"
 	"smart-interview/internal/router"
+	"smart-interview/internal/service/user"
 )
 
 func main() {
@@ -25,6 +26,9 @@ func main() {
 		return
 	}
 	defer database.GetDB().Close()
+
+	// 启动会话清理任务
+	user.StartSessionCleanup()
 
 	// 启动服务
 	middleware.Logger.Log("INFO", fmt.Sprintf("Starting server on port %s", cfg.Port))

@@ -1,4 +1,4 @@
-package database
+package _struct
 
 type User struct {
 	UID      int64  `gorm:"primaryKey;column:uid"`
