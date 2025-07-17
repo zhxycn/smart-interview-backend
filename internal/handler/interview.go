@@ -12,8 +12,8 @@ import (
 )
 
 type AudioRequest struct {
-	Data  string `json:"data"`
-	IsEnd bool   `json:"is_end"`
+	Data string `json:"data"`
+	Msg  string `json:"msg"`
 }
 
 type Response struct {

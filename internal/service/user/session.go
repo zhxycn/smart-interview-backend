@@ -47,7 +47,7 @@ func CreateSession(uid int64, r *http.Request) (string, error) {
 	timestamp := time.Now()
 
 	_, err := db.Exec(
-		"INSERT INTO session (session_id, uid, ip_address, user_agent,created_at, expires_at, last_activity) VALUES (?,?, ?, ?, ?, ?, ?)",
+		"INSERT INTO session (session_id, uid, ip_address, user_agent, created_at, expires_at, last_activity) VALUES (?, ?, ?, ?, ?, ?, ?)",
 		sessionID, uid, ipAddress, userAgent, timestamp, expiresAt, timestamp,
 	)
 
