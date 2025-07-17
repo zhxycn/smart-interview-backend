@@ -3,20 +3,23 @@ package facial
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"smart-interview/internal/database"
 	"time"
 )
 
 func Record(id string, data interface{}) (bool, error) {
+	if id == "" {
+		return false, fmt.Errorf("interview ID cannot be empty")
+	}
+
 	rdb := database.GetRedis()
 	if rdb == nil {
-		return false, errors.New("redis connection failed")
+		return false, fmt.Errorf("redis connection failed")
 	}
 
 	ctx := context.Background()
-	redisKey := fmt.Sprintf("interview:%s:conversation", id)
+	redisKey := fmt.Sprintf("interview:%s:facial", id)
 
 	jsonData, err := json.Marshal(data)
 	if err != nil {

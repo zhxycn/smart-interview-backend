@@ -3,16 +3,19 @@ package interview
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"smart-interview/internal/database"
 	"time"
 )
 
 func Record(id, text, role string) (bool, error) {
+	if id == "" {
+		return false, fmt.Errorf("interview ID cannot be empty")
+	}
+
 	rdb := database.GetRedis()
 	if rdb == nil {
-		return false, errors.New("redis connection failed")
+		return false, fmt.Errorf("redis connection failed")
 	}
 
 	ctx := context.Background()
@@ -39,9 +42,13 @@ func Record(id, text, role string) (bool, error) {
 }
 
 func GetRecord(id string) (string, error) {
+	if id == "" {
+		return "", fmt.Errorf("interview ID cannot be empty")
+	}
+
 	rdb := database.GetRedis()
 	if rdb == nil {
-		return "", errors.New("redis connection failed")
+		return "", fmt.Errorf("redis connection failed")
 	}
 
 	ctx := context.Background()
