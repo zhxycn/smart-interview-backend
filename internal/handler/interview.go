@@ -69,7 +69,7 @@ func Interview(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response, err := interview.Interview(cfg.TencentAppId, cfg.TencentSecretId, cfg.TencentSecretKey, req.Data, req.Msg)
+	response, err := interview.Interview(cfg.TencentAppId, cfg.TencentSecretId, cfg.TencentSecretKey, req.Data, req.Msg, req.Id)
 	if err != nil {
 		util.WriteResponse(w, http.StatusInternalServerError, nil)
 		middleware.Logger.Log("ERROR", fmt.Sprintf("%v", err))

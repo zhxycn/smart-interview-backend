@@ -37,3 +37,34 @@ func Record(id, text, role string) (bool, error) {
 
 	return true, nil
 }
+
+func GetRecord(id string) (string, error) {
+	rdb := database.GetRedis()
+	if rdb == nil {
+		return "", errors.New("redis connection failed")
+	}
+
+	ctx := context.Background()
+	redisKey := fmt.Sprintf("interview:%s:conversation", id)
+
+	data, err := rdb.LRange(ctx, redisKey, 0, -1).Result()
+	if err != nil {
+		return "", err
+	}
+
+	var records []map[string]string
+	for _, item := range data {
+		var record map[string]string
+		if err = json.Unmarshal([]byte(item), &record); err != nil {
+			return "", err
+		}
+		records = append(records, record)
+	}
+
+	jsonRecords, err := json.Marshal(records)
+	if err != nil {
+		return "", err
+	}
+
+	return string(jsonRecords), nil
+}

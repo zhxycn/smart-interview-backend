@@ -39,7 +39,7 @@ type DifyWorkflowResponse struct {
 	MessageId      string `json:"message_id"`
 }
 
-func Interview(appId, secretId, secretKey, base64Audio, msg string) (WorkflowResponse, error) {
+func Interview(appId, secretId, secretKey, base64Audio, msg, id string) (WorkflowResponse, error) {
 	var asrResult string
 	var err error
 
@@ -52,7 +52,7 @@ func Interview(appId, secretId, secretKey, base64Audio, msg string) (WorkflowRes
 		}
 	}
 
-	difyResponse, err := CallInterviewWorkflow(asrResult)
+	difyResponse, err := CallInterviewWorkflow(asrResult, id)
 	if err != nil {
 		return WorkflowResponse{}, fmt.Errorf("failed to call Dify workflow: %v", err)
 	}
@@ -151,14 +151,20 @@ func RecognizeAudio(appId, secretId, secretKey, base64Audio string) (string, err
 	return recognizedText, nil
 }
 
-func CallInterviewWorkflow(text string) (DifyWorkflowResponse, error) {
+func CallInterviewWorkflow(text, id string) (DifyWorkflowResponse, error) {
 	endpoint := fmt.Sprintf("%s/chat-messages", config.LoadConfig().DifyEndpoint)
+
+	history, err := GetRecord(id)
+	if err != nil {
+		return DifyWorkflowResponse{}, err
+	}
 
 	payload := map[string]interface{}{
 		"query":           text,
 		"conversation_id": "",
 		"inputs": map[string]interface{}{
-			"data": nil,
+			"data":    nil,
+			"history": history,
 		},
 		"response_mode":     "blocking",
 		"parent_message_id": nil,
