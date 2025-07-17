@@ -21,7 +21,6 @@ func Register(uid int64, position, level string) (string, error) {
 
 	_, err := db.Exec("INSERT INTO interview (id, user, position, level, created_at) VALUES (?, ?, ?, ?, ?)", interviewId, uid, position, level, timestamp)
 	if err != nil {
-		middleware.Logger.Log("ERROR", fmt.Sprintf("Failed to insert new interview: %v", err))
 		return "", err
 	}
 

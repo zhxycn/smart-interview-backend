@@ -39,10 +39,17 @@ type DifyWorkflowResponse struct {
 	MessageId      string `json:"message_id"`
 }
 
-func Interview(appId, secretId, secretKey, base64Audio string) (WorkflowResponse, error) {
-	asrResult, err := RecognizeAudio(appId, secretId, secretKey, base64Audio)
-	if err != nil {
-		return WorkflowResponse{}, err
+func Interview(appId, secretId, secretKey, base64Audio, msg string) (WorkflowResponse, error) {
+	var asrResult string
+	var err error
+
+	if msg == "start" {
+		asrResult = "开始面试"
+	} else {
+		asrResult, err = RecognizeAudio(appId, secretId, secretKey, base64Audio)
+		if err != nil {
+			return WorkflowResponse{}, err
+		}
 	}
 
 	difyResponse, err := CallInterviewWorkflow(asrResult)

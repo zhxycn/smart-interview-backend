@@ -12,6 +12,7 @@ import (
 )
 
 type FacialRequest struct {
+	Id          string `json:"id"`
 	ImageData   string `json:"image_data"`
 	ImageFormat string `json:"image_format"`
 }
@@ -40,6 +41,13 @@ func FacialHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		util.WriteResponse(w, http.StatusInternalServerError, err.Error())
 		middleware.Logger.Log("ERROR", fmt.Sprintf("facial detection error: %v", err))
+		return
+	}
+
+	ok, err := facial.Record(req.Id, result)
+	if !ok {
+		util.WriteResponse(w, http.StatusInternalServerError, nil)
+		middleware.Logger.Log("ERROR", fmt.Sprintf("Failed to record facial data: %v", err))
 		return
 	}
 
