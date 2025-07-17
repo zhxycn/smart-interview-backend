@@ -12,6 +12,9 @@ type Config struct {
 	Debug            bool
 	Port             string
 	Database         string
+	Redis            string
+	RedisPassword    string
+	RedisDb          int
 	XunfeiAppId      string
 	XunfeiApiKey     string
 	XunfeiApiSecret  string
@@ -31,6 +34,9 @@ func DefaultConfig() *Config {
 		Debug:            false,
 		Port:             "8080",
 		Database:         "",
+		Redis:            "",
+		RedisPassword:    "",
+		RedisDb:          0,
 		XunfeiAppId:      "",
 		XunfeiApiKey:     "",
 		XunfeiApiSecret:  "",
