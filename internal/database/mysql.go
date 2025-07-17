@@ -18,7 +18,7 @@ type MySQL struct {
 var dbInstance *MySQL
 
 func NewDB(cfg *config.Config) error {
-	dsn := fmt.Sprintf(cfg.Database)
+	dsn := fmt.Sprintf("%s?charset=utf8mb4&parseTime=true", cfg.Database)
 
 	// 连接数据库
 	start := time.Now()
