@@ -21,7 +21,6 @@ func StopInterview(uid int64, id string) (bool, error) {
 	}
 
 	timestamp := time.Now()
-
 	ctx := context.Background()
 	conversationRedisKey := fmt.Sprintf("interview:%s:conversation", id)
 	facialRedisKey := fmt.Sprintf("interview:%s:facial", id)
@@ -36,12 +35,29 @@ func StopInterview(uid int64, id string) (bool, error) {
 		return false, err
 	}
 
-	conversationJSON, err := json.Marshal(conversationData)
+	// 反序列化
+	var conversationItems []map[string]interface{}
+	for _, v := range conversationData {
+		var obj map[string]interface{}
+		if err := json.Unmarshal([]byte(v), &obj); err != nil {
+			return false, err
+		}
+		conversationItems = append(conversationItems, obj)
+	}
+	conversationJSON, err := json.Marshal(conversationItems)
 	if err != nil {
 		return false, err
 	}
 
-	facialJSON, err := json.Marshal(facialData)
+	var facialItems []map[string]interface{}
+	for _, v := range facialData {
+		var obj map[string]interface{}
+		if err := json.Unmarshal([]byte(v), &obj); err != nil {
+			return false, err
+		}
+		facialItems = append(facialItems, obj)
+	}
+	facialJSON, err := json.Marshal(facialItems)
 	if err != nil {
 		return false, err
 	}
