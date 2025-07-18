@@ -57,7 +57,7 @@ func Interview(w http.ResponseWriter, r *http.Request) {
 		middleware.Logger.Log("INFO", fmt.Sprintf("Interview started. User %d, ID %s", uid, req.Id))
 	}
 
-	if req.Msg == "stop" {
+	if req.Msg == "end" {
 		ok, err := interview.StopInterview(uid, req.Id)
 		if !ok {
 			util.WriteResponse(w, http.StatusInternalServerError, nil)
