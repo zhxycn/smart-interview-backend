@@ -1,13 +1,33 @@
 package interview
 
 import (
+	"encoding/json"
 	"fmt"
 	"smart-interview/internal/database"
-	"smart-interview/internal/database/struct"
+	"time"
 )
 
-func Result(id string, uid int64) (_struct.Interview, error) {
-	var interview _struct.Interview
+type Data struct {
+	ID           string           `json:"id"`
+	User         int              `json:"user"`
+	Position     string           `json:"position"`
+	Level        string           `json:"level"`
+	CreatedAt    time.Time        `json:"created_at"`
+	StartTime    time.Time        `json:"start_time"`
+	EndTime      time.Time        `json:"end_time"`
+	Conversation json.RawMessage  `json:"conversation"`
+	Facial       json.RawMessage  `json:"facial"`
+	Score        int              `json:"score"`
+	Communicate  int              `json:"communicate"`
+	Specialized  int              `json:"specialized"`
+	Expression   int              `json:"expression"`
+	Strain       int              `json:"strain"`
+	Appearance   int              `json:"appearance"`
+	Appraise     *json.RawMessage `json:"appraise"`
+}
+
+func Result(id string, uid int64) (Data, error) {
+	var interview Data
 
 	db := database.GetDB()
 	if db == nil {

@@ -18,7 +18,7 @@ type Interview struct {
 	Expression   int       `gorm:"column:expression;default:-1"`
 	Strain       int       `gorm:"column:strain;default:-1"`
 	Appearance   int       `gorm:"column:appearance;default:-1"`
-	Appraise     *string   `gorm:"column:appraise;type:json"`
+	Appraise     string    `gorm:"column:appraise;type:json"`
 }
 
 func (Interview) TableName() string {
