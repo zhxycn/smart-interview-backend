@@ -3,21 +3,22 @@ package interview
 import (
 	"fmt"
 	"smart-interview/internal/database"
+	"time"
 )
 
 type I struct {
-	ID          string `json:"id"`
-	Position    string `json:"position"`
-	Level       string `json:"level"`
-	CreatedAt   string `json:"created_at"`
-	StartTime   string `json:"start_time"`
-	EndTime     string `json:"end_time"`
-	Score       int    `json:"score"`
-	Communicate int    `json:"communicate"`
-	Specialized int    `json:"specialized"`
-	Expression  int    `json:"expression"`
-	Strain      int    `json:"strain"`
-	Appearance  int    `json:"appearance"`
+	ID          string     `json:"id"`
+	Position    string     `json:"position"`
+	Level       string     `json:"level"`
+	CreatedAt   time.Time  `json:"created_at"`
+	StartTime   *time.Time `json:"start_time"`
+	EndTime     *time.Time `json:"end_time"`
+	Score       int        `json:"score"`
+	Communicate int        `json:"communicate"`
+	Specialized int        `json:"specialized"`
+	Expression  int        `json:"expression"`
+	Strain      int        `json:"strain"`
+	Appearance  int        `json:"appearance"`
 }
 
 func List(uid int64) ([]*I, error) {
@@ -44,6 +45,9 @@ func List(uid int64) ([]*I, error) {
 		)
 		if err != nil {
 			return nil, err
+		}
+		if i.EndTime == nil {
+			continue // 处理EndTime为空，即未结束的面试
 		}
 		interviews = append(interviews, &i)
 	}
