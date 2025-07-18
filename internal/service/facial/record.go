@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func Record(id string, data interface{}) (bool, error) {
+func Record(id string, facialData interface{}) (bool, error) {
 	if id == "" {
 		return false, fmt.Errorf("interview ID cannot be empty")
 	}
@@ -20,6 +20,11 @@ func Record(id string, data interface{}) (bool, error) {
 
 	ctx := context.Background()
 	redisKey := fmt.Sprintf("interview:%s:facial", id)
+
+	data := map[string]interface{}{
+		"data": facialData,
+		"time": time.Now().Format(time.RFC3339),
+	}
 
 	jsonData, err := json.Marshal(data)
 	if err != nil {

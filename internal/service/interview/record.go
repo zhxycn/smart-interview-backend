@@ -23,6 +23,7 @@ func Record(id, text, role string) (bool, error) {
 
 	data := map[string]string{
 		"role":    role,
+		"time":    time.Now().Format(time.RFC3339),
 		"content": text,
 	}
 
