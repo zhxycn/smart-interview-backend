@@ -18,6 +18,8 @@ func NewRouter() *http.ServeMux {
 	mux.HandleFunc("/resume", methodHandler(util.RequireAuth(handler.ResumeHandler), http.MethodPost))
 	mux.HandleFunc("/interview", methodHandler(util.RequireAuth(handler.Interview), http.MethodPost))
 	mux.HandleFunc("/interview_register", methodHandler(util.RequireAuth(handler.InterviewRegister), http.MethodPost))
+	mux.HandleFunc("/interview_list", methodHandler(util.RequireAuth(handler.InterviewList), http.MethodGet))
+	mux.HandleFunc("/interview_result", methodHandler(util.RequireAuth(handler.InterviewResult), http.MethodGet))
 
 	return mux
 }
