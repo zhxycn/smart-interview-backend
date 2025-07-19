@@ -12,12 +12,12 @@ type Interview struct {
 	EndTime      time.Time `gorm:"column:end_time"`
 	Conversation string    `gorm:"column:conversation;type:json"`
 	Facial       string    `gorm:"column:facial;type:json"`
-	Score        int       `gorm:"column:score;default:-1"`
-	Communicate  int       `gorm:"column:communicate;default:-1"`
-	Specialized  int       `gorm:"column:specialized;default:-1"`
-	Expression   int       `gorm:"column:expression;default:-1"`
-	Strain       int       `gorm:"column:strain;default:-1"`
-	Appearance   int       `gorm:"column:appearance;default:-1"`
+	Score        int       `gorm:"column:score;default:0"`
+	Communicate  int       `gorm:"column:communicate;default:0"`
+	Specialized  int       `gorm:"column:specialized;default:0"`
+	Expression   int       `gorm:"column:expression;default:0"`
+	Strain       int       `gorm:"column:strain;default:0"`
+	Appearance   int       `gorm:"column:appearance;default:0"`
 	Appraise     string    `gorm:"column:appraise;type:json"`
 	Process      string    `gorm:"column:process;type:json"`
 	Problem      string    `gorm:"column:problem;type:json"`
