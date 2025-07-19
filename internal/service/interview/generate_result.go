@@ -69,6 +69,10 @@ func GenerateInterviewResult(uid int64, id string) error {
 	}
 
 	data, err := Result(id, uid)
+	if err != nil {
+		middleware.Logger.Log("ERROR", fmt.Sprintf("Failed to get interview data: %v", err))
+		return err
+	}
 
 	conf := config.LoadConfig()
 
