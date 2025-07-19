@@ -12,11 +12,11 @@ type Data struct {
 	User         int              `json:"user"`
 	Position     string           `json:"position"`
 	Level        string           `json:"level"`
-	CreatedAt    time.Time        `json:"created_at"`
-	StartTime    time.Time        `json:"start_time"`
-	EndTime      time.Time        `json:"end_time"`
-	Conversation json.RawMessage  `json:"conversation"`
-	Facial       json.RawMessage  `json:"facial"`
+	CreatedAt    *time.Time       `json:"created_at"`
+	StartTime    *time.Time       `json:"start_time"`
+	EndTime      *time.Time       `json:"end_time"`
+	Conversation *json.RawMessage `json:"conversation"`
+	Facial       *json.RawMessage `json:"facial"`
 	Score        int              `json:"score"`
 	Communicate  int              `json:"communicate"`
 	Specialized  int              `json:"specialized"`

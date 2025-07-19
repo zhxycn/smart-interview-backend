@@ -80,10 +80,20 @@ func GenerateInterviewResult(uid int64, id string) error {
 
 	payload := map[string]interface{}{
 		"inputs": map[string]interface{}{
-			"conversation": string(data.Conversation),
-			"facial":       string(data.Facial),
-			"position":     data.Position,
-			"level":        data.Level,
+			"conversation": func() string {
+				if data.Conversation != nil {
+					return string(*data.Conversation)
+				}
+				return ""
+			}(),
+			"facial": func() string {
+				if data.Facial != nil {
+					return string(*data.Facial)
+				}
+				return ""
+			}(),
+			"position": data.Position,
+			"level":    data.Level,
 		},
 		"response_mode": "blocking",
 		"user":          "admin",
