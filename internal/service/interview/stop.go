@@ -3,7 +3,6 @@ package interview
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"smart-interview/internal/database"
 	"time"
@@ -12,12 +11,12 @@ import (
 func StopInterview(uid int64, id string) (bool, error) {
 	db := database.GetDB()
 	if db == nil {
-		return false, errors.New("database connection failed")
+		return false, fmt.Errorf("database connection failed")
 	}
 
 	rdb := database.GetRedis()
 	if rdb == nil {
-		return false, errors.New("redis connection failed")
+		return false, fmt.Errorf("redis connection failed")
 	}
 
 	timestamp := time.Now()

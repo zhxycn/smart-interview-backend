@@ -66,6 +66,9 @@ func Interview(w http.ResponseWriter, r *http.Request) {
 		}
 		util.WriteResponse(w, http.StatusOK, nil)
 		middleware.Logger.Log("INFO", fmt.Sprintf("Interview stopped. User %d, ID %s", uid, req.Id))
+		go func() {
+			_ = interview.GenerateInterviewResult(uid, req.Id)
+		}()
 		return
 	}
 

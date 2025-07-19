@@ -19,6 +19,9 @@ type Interview struct {
 	Strain       int       `gorm:"column:strain;default:-1"`
 	Appearance   int       `gorm:"column:appearance;default:-1"`
 	Appraise     string    `gorm:"column:appraise;type:json"`
+	Process      string    `gorm:"column:process;type:json"`
+	Problem      string    `gorm:"column:problem;type:json"`
+	Suggestion   string    `gorm:"column:suggestion;type:json"`
 }
 
 func (Interview) TableName() string {

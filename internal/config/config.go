@@ -21,6 +21,7 @@ type Config struct {
 	DifyEndpoint     string
 	ResumeApiKey     string
 	InterviewApiKey  string
+	ResultApiKey     string
 	TencentAppId     string
 	TencentSecretId  string
 	TencentSecretKey string
@@ -43,6 +44,7 @@ func DefaultConfig() *Config {
 		DifyEndpoint:     "",
 		ResumeApiKey:     "",
 		InterviewApiKey:  "",
+		ResultApiKey:     "",
 		TencentAppId:     "",
 		TencentSecretId:  "",
 		TencentSecretKey: "",

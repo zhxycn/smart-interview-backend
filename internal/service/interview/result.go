@@ -24,6 +24,9 @@ type Data struct {
 	Strain       int              `json:"strain"`
 	Appearance   int              `json:"appearance"`
 	Appraise     *json.RawMessage `json:"appraise"`
+	Process      *json.RawMessage `json:"process"`
+	Problem      *json.RawMessage `json:"problem"`
+	Suggestion   *json.RawMessage `json:"suggestion"`
 }
 
 func Result(id string, uid int64) (Data, error) {
@@ -60,6 +63,9 @@ func Result(id string, uid int64) (Data, error) {
 		&interview.Strain,
 		&interview.Appearance,
 		&interview.Appraise,
+		&interview.Process,
+		&interview.Problem,
+		&interview.Suggestion,
 	)
 	if err != nil {
 		return interview, err
