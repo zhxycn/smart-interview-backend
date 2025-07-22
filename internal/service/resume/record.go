@@ -1,6 +1,7 @@
 package resume
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"
 	"smart-interview/internal/database"
@@ -27,15 +28,19 @@ func Record(user int64, fileName string, fileData []byte, targetPosition, experi
 	}
 
 	resumeId := uuid.New().String()
-
 	timestamp := time.Now()
 
-	_, err := db.Exec(
+	feedbackJSON, err := json.Marshal(feedback)
+	if err != nil {
+		return fmt.Errorf("failed to marshal feedback: %v", err)
+	}
+
+	_, err = db.Exec(
 		`INSERT INTO resume (id, user, file_name, file_data, created_at, target_position, experience, industry, focus_areas, score, feedback) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		resumeId, user, fileName, fileData, timestamp, targetPosition, experience, industry, focusAreas, feedback.OverallScore, feedback,
+		resumeId, user, fileName, fileData, timestamp, targetPosition, experience, industry, focusAreas, feedback.OverallScore, feedbackJSON,
 	)
 	if err != nil {
-		return fmt.Errorf("failed to record resume: %w", err)
+		return fmt.Errorf("failed to record resume: %v", err)
 	}
 
 	return nil
@@ -43,6 +48,7 @@ func Record(user int64, fileName string, fileData []byte, targetPosition, experi
 
 func GetResume(uid int64, id string) (Resume, error) {
 	var resume Resume
+	var feedbackJSON []byte
 
 	db := database.GetDB()
 	if db == nil {
@@ -71,10 +77,15 @@ func GetResume(uid int64, id string) (Resume, error) {
 		&resume.Industry,
 		&resume.FocusAreas,
 		&resume.Score,
-		&resume.Feedback,
+		&feedbackJSON,
 	)
 	if err != nil {
 		return resume, err
+	}
+
+	err = json.Unmarshal(feedbackJSON, &resume.Feedback)
+	if err != nil {
+		return resume, fmt.Errorf("failed to unmarshal feedback: %v", err)
 	}
 
 	return resume, nil

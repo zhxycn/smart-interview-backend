@@ -24,7 +24,7 @@ func ResumeResultHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		util.WriteResponse(w, http.StatusInternalServerError, nil)
-		middleware.Logger.Log("ERROR", fmt.Sprintf("Failed to get interview result: %v", err))
+		middleware.Logger.Log("ERROR", fmt.Sprintf("Failed to get resume result: %v", err))
 		return
 	}
 
