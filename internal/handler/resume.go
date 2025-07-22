@@ -11,6 +11,8 @@ import (
 )
 
 func ResumeHandler(w http.ResponseWriter, r *http.Request) {
+	uid, _ := util.GetUserID(r)
+
 	err := r.ParseMultipartForm(10 << 20)
 	if err != nil {
 		util.WriteResponse(w, http.StatusBadRequest, "failed to parse form")
@@ -48,6 +50,11 @@ func ResumeHandler(w http.ResponseWriter, r *http.Request) {
 		util.WriteResponse(w, http.StatusInternalServerError, "failed to analyze")
 		middleware.Logger.Log("ERROR", fmt.Sprintf("Failed to analyze: %v", err))
 		return
+	}
+
+	err = resume.Record(uid, handler.Filename, buf.Bytes(), params.TargetPosition, params.Experience, params.Industry, params.FocusAreas, result)
+	if err != nil {
+		middleware.Logger.Log("ERROR", fmt.Sprintf("Failed to record resume: %v", err))
 	}
 
 	util.WriteResponse(w, http.StatusOK, result)

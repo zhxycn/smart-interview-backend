@@ -32,6 +32,7 @@ type StructuredOutput struct {
 		Matched   []string `json:"matched"`
 		Suggested []string `json:"suggested"`
 	} `json:"keywordAnalysis"`
+	Position string `json:"position"`
 }
 
 func uploadFile(fileName string, fileData []byte) (string, error) {
