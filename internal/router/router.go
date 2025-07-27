@@ -23,6 +23,7 @@ func NewRouter() *http.ServeMux {
 	mux.HandleFunc("/resume_list", methodHandler(util.RequireAuth(handler.ResumeListHandler), http.MethodGet))
 	mux.HandleFunc("/resume_result", methodHandler(util.RequireAuth(handler.ResumeResultHandler), http.MethodGet))
 	mux.HandleFunc("/resume_download", methodHandler(util.RequireAuth(handler.ResumeDownloadHandler), http.MethodGet))
+	mux.HandleFunc("/question", methodHandler(util.RequireAuth(handler.QuestionHandler), http.MethodPost))
 
 	return mux
 }

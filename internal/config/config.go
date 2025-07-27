@@ -9,48 +9,54 @@ import (
 )
 
 type Config struct {
-	Debug            bool
-	Port             string
-	Database         string
-	Redis            string
-	RedisPassword    string
-	RedisDb          int
-	XunfeiAppId      string
-	XunfeiApiKey     string
-	XunfeiApiSecret  string
-	DifyEndpoint     string
-	ResumeApiKey     string
-	InterviewApiKey  string
-	ResultApiKey     string
-	TencentAppId     string
-	TencentSecretId  string
-	TencentSecretKey string
-	SiliconflowToken string
-	SiliconflowModel string
-	SiliconflowVoice string
+	Debug                  bool
+	Port                   string
+	Database               string
+	Redis                  string
+	RedisPassword          string
+	RedisDb                int
+	XunfeiAppId            string
+	XunfeiApiKey           string
+	XunfeiApiSecret        string
+	DifyEndpoint           string
+	ResumeApiKey           string
+	InterviewApiKey        string
+	ResultApiKey           string
+	QuestionApiKey         string
+	QuestionJudgmentApiKey string
+	QuestionResultApiKey   string
+	TencentAppId           string
+	TencentSecretId        string
+	TencentSecretKey       string
+	SiliconflowToken       string
+	SiliconflowModel       string
+	SiliconflowVoice       string
 }
 
 func DefaultConfig() *Config {
 	return &Config{
-		Debug:            false,
-		Port:             "8080",
-		Database:         "",
-		Redis:            "",
-		RedisPassword:    "",
-		RedisDb:          0,
-		XunfeiAppId:      "",
-		XunfeiApiKey:     "",
-		XunfeiApiSecret:  "",
-		DifyEndpoint:     "",
-		ResumeApiKey:     "",
-		InterviewApiKey:  "",
-		ResultApiKey:     "",
-		TencentAppId:     "",
-		TencentSecretId:  "",
-		TencentSecretKey: "",
-		SiliconflowToken: "",
-		SiliconflowModel: "",
-		SiliconflowVoice: "",
+		Debug:                  false,
+		Port:                   "8080",
+		Database:               "",
+		Redis:                  "",
+		RedisPassword:          "",
+		RedisDb:                0,
+		XunfeiAppId:            "",
+		XunfeiApiKey:           "",
+		XunfeiApiSecret:        "",
+		DifyEndpoint:           "",
+		ResumeApiKey:           "",
+		InterviewApiKey:        "",
+		ResultApiKey:           "",
+		QuestionApiKey:         "",
+		QuestionJudgmentApiKey: "",
+		QuestionResultApiKey:   "",
+		TencentAppId:           "",
+		TencentSecretId:        "",
+		TencentSecretKey:       "",
+		SiliconflowToken:       "",
+		SiliconflowModel:       "",
+		SiliconflowVoice:       "",
 	}
 }
 

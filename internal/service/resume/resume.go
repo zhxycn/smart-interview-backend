@@ -74,9 +74,9 @@ func uploadFile(fileName string, fileData []byte) (string, error) {
 }
 
 func RunWorkflow(fileID string, params Params) (StructuredOutput, error) {
-	conf := config.LoadConfig()
+	cfg := config.LoadConfig()
 
-	url := fmt.Sprintf("%s/workflows/run", conf.DifyEndpoint)
+	url := fmt.Sprintf("%s/workflows/run", cfg.DifyEndpoint)
 
 	payload := map[string]interface{}{
 		"inputs": map[string]interface{}{
@@ -103,7 +103,7 @@ func RunWorkflow(fileID string, params Params) (StructuredOutput, error) {
 	if err != nil {
 		return StructuredOutput{}, err
 	}
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", conf.ResumeApiKey))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", cfg.ResumeApiKey))
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
