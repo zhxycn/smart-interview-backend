@@ -24,7 +24,7 @@ type Response struct {
 	Error string `json:"error,omitempty"`
 }
 
-func Interview(w http.ResponseWriter, r *http.Request) {
+func InterviewHandler(w http.ResponseWriter, r *http.Request) {
 	var req AudioRequest
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {

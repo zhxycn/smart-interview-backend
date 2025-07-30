@@ -19,7 +19,7 @@ type InterviewResponse struct {
 	ID string `json:"id"`
 }
 
-func InterviewRegister(w http.ResponseWriter, r *http.Request) {
+func InterviewRegisterHandler(w http.ResponseWriter, r *http.Request) {
 	var req InterviewRequest
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {

@@ -4,17 +4,17 @@ import (
 	"fmt"
 	"net/http"
 	"smart-interview/internal/middleware"
-	"smart-interview/internal/service/interview"
+	"smart-interview/internal/service/question"
 	"smart-interview/internal/util"
 )
 
-func InterviewListHandler(w http.ResponseWriter, r *http.Request) {
+func QuestionListHandler(w http.ResponseWriter, r *http.Request) {
 	uid, _ := util.GetUserID(r)
 
-	result, err := interview.List(uid)
+	result, err := question.List(uid)
 	if err != nil {
 		util.WriteResponse(w, http.StatusInternalServerError, nil)
-		middleware.Logger.Log("ERROR", fmt.Sprintf("Failed to get interview list: %v", err))
+		middleware.Logger.Log("ERROR", fmt.Sprintf("Failed to get question list: %v", err))
 		return
 	}
 

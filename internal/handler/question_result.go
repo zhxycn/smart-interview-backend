@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"net/http"
 	"smart-interview/internal/middleware"
-	"smart-interview/internal/service/interview"
+	"smart-interview/internal/service/question"
 	"smart-interview/internal/util"
 )
 
-func InterviewResultHandler(w http.ResponseWriter, r *http.Request) {
+func QuestionResultHandler(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
 	if id == "" {
 		util.WriteResponse(w, http.StatusBadRequest, nil)
@@ -21,14 +21,14 @@ func InterviewResultHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result, err := interview.Result(id, uid)
+	result, err := question.Result(id, uid)
 	if err != nil {
 		if err.Error() == "not found" {
 			util.WriteResponse(w, http.StatusNotFound, nil)
 			return
 		}
 		util.WriteResponse(w, http.StatusInternalServerError, nil)
-		middleware.Logger.Log("ERROR", fmt.Sprintf("Failed to get interview result: %v", err))
+		middleware.Logger.Log("ERROR", fmt.Sprintf("Failed to get question result: %v", err))
 		return
 	}
 

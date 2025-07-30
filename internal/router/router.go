@@ -16,14 +16,16 @@ func NewRouter() *http.ServeMux {
 
 	mux.HandleFunc("/facial", methodHandler(util.RequireAuth(handler.FacialHandler), http.MethodPost))
 	mux.HandleFunc("/resume", methodHandler(util.RequireAuth(handler.ResumeHandler), http.MethodPost))
-	mux.HandleFunc("/interview", methodHandler(util.RequireAuth(handler.Interview), http.MethodPost))
-	mux.HandleFunc("/interview_register", methodHandler(util.RequireAuth(handler.InterviewRegister), http.MethodPost))
-	mux.HandleFunc("/interview_list", methodHandler(util.RequireAuth(handler.InterviewList), http.MethodGet))
-	mux.HandleFunc("/interview_result", methodHandler(util.RequireAuth(handler.InterviewResult), http.MethodGet))
+	mux.HandleFunc("/interview", methodHandler(util.RequireAuth(handler.InterviewHandler), http.MethodPost))
+	mux.HandleFunc("/interview_register", methodHandler(util.RequireAuth(handler.InterviewRegisterHandler), http.MethodPost))
+	mux.HandleFunc("/interview_list", methodHandler(util.RequireAuth(handler.InterviewListHandler), http.MethodGet))
+	mux.HandleFunc("/interview_result", methodHandler(util.RequireAuth(handler.InterviewResultHandler), http.MethodGet))
 	mux.HandleFunc("/resume_list", methodHandler(util.RequireAuth(handler.ResumeListHandler), http.MethodGet))
 	mux.HandleFunc("/resume_result", methodHandler(util.RequireAuth(handler.ResumeResultHandler), http.MethodGet))
 	mux.HandleFunc("/resume_download", methodHandler(util.RequireAuth(handler.ResumeDownloadHandler), http.MethodGet))
 	mux.HandleFunc("/question", methodHandler(util.RequireAuth(handler.QuestionHandler), http.MethodPost))
+	mux.HandleFunc("/question_list", methodHandler(util.RequireAuth(handler.QuestionListHandler), http.MethodGet))
+	mux.HandleFunc("/question_result", methodHandler(util.RequireAuth(handler.QuestionResultHandler), http.MethodGet))
 
 	return mux
 }
