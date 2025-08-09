@@ -3,7 +3,7 @@ package _struct
 import "time"
 
 type Session struct {
-	SessionID    string    `gorm:"primaryKey;column:session_id"`
+	SessionID    string    `gorm:"column:session_id;primary_key"`
 	UID          int64     `gorm:"column:uid"`
 	IPAddress    string    `gorm:"column:ip_address"`
 	UserAgent    string    `gorm:"column:user_agent"`

@@ -26,6 +26,7 @@ func NewRouter() *http.ServeMux {
 	mux.HandleFunc("/question", methodHandler(util.RequireAuth(handler.QuestionHandler), http.MethodPost))
 	mux.HandleFunc("/question_list", methodHandler(util.RequireAuth(handler.QuestionListHandler), http.MethodGet))
 	mux.HandleFunc("/question_result", methodHandler(util.RequireAuth(handler.QuestionResultHandler), http.MethodGet))
+	mux.HandleFunc("/suggestion", methodHandler(util.RequireAuth(handler.SuggestionHandler), http.MethodGet, http.MethodPost))
 
 	return mux
 }

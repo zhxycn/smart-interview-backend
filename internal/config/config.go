@@ -25,6 +25,7 @@ type Config struct {
 	QuestionApiKey         string
 	QuestionJudgmentApiKey string
 	QuestionResultApiKey   string
+	SuggestionApiKey       string
 	TencentAppId           string
 	TencentSecretId        string
 	TencentSecretKey       string
@@ -51,6 +52,7 @@ func DefaultConfig() *Config {
 		QuestionApiKey:         "",
 		QuestionJudgmentApiKey: "",
 		QuestionResultApiKey:   "",
+		SuggestionApiKey:       "",
 		TencentAppId:           "",
 		TencentSecretId:        "",
 		TencentSecretKey:       "",

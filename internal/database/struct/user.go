@@ -1,7 +1,7 @@
 package _struct
 
 type User struct {
-	UID      int64  `gorm:"primaryKey;column:uid"`
+	UID      int64  `gorm:"column:uid;primary_key"`
 	Email    string `gorm:"column:email"`
 	Password string `gorm:"column:password"`
 	Name     string `gorm:"column:name"`
