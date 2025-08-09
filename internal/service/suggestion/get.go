@@ -11,13 +11,20 @@ func GetSuggestion(uid int64) (*Data, error) {
 	db := database.GetDB()
 
 	var data Data
+	var exists bool
 
 	row := db.QueryRow("SELECT suggestion, created_at FROM suggestion WHERE user = ?", uid)
-	if row == nil {
+
+	err := db.QueryRow("SELECT EXISTS(SELECT 1 FROM suggestion WHERE user = ?)", uid).Scan(&exists)
+	if err != nil {
+		return nil, err
+	}
+
+	if !exists {
 		return nil, nil
 	}
 
-	err := row.Scan(&data.Suggestion, &data.CreatedAt)
+	err = row.Scan(&data.Suggestion, &data.CreatedAt)
 	if err != nil {
 		return nil, err
 	}
